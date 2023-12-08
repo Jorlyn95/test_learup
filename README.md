@@ -11,3 +11,6 @@ modificado el perfil del empleado.
 # Solucion:
 
 Se procedio a crear una DB en mysql se creo una tabla empleados que tiene relacion con la tabla jefes, cada vez que se realiza un update al jefe directo se registro un historial en la tabla historial.
+
+se creo una interfaz usando angular para el registro de empleados y jefes con validaciones que no permiten valores nulos y con la opcion de poder ver el historial de cambios de jefes (asignaciones), En el back-end se uso Nest.js agregando la opcion de validaciones de campos para validar que todos los campos requeridos existan.
+
