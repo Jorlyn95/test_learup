@@ -1,0 +1,130 @@
+<app-template>
+
+
+    <div class="w-full bg-slate-100 border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+
+        <div class="mb-20 mt-5">
+            <button type="button" (click)="addEmployer()"
+                [className]="!add_edit ? 'float-right mb-2  text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2  dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800' : 'focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900 float-right'">
+                @if (!add_edit) {
+                    Agregar Empleado
+                }@else {
+                    Cerrar
+                }
+            </button>
+
+        </div>
+
+        @if (!add_edit) {
+        <p class="text-lg p-2">Listado Empleados</p>
+
+        <div class="relative overflow-x-auto">
+            <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                    <tr>
+                        <th scope="col" class="px-6 py-3">
+                            Nombre
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            Apellido
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            Cedula
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            Jefe
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            Acciones
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (item of rowEmpleados; track $index) {
+                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                            {{item.Nombre}}
+                        </th>
+                        <td class="px-6 py-4">
+                            {{item.Apellido}}
+                        </td>
+                        <td class="px-6 py-4">
+                            {{item.Cedula}}
+                        </td>
+                        <td class="px-6 py-4">
+                            {{item.Jefe}}
+                        </td>
+                        <td class="px-6 py-4">
+                            <button type="button" (click)="ediData(item)"
+                                class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
+                                Editar
+                            </button>
+                            <button type="button" (click)="changeBoss(item)"
+                                class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
+                                Cambiar Jefe
+                            </button>
+                            <a type="button" [routerLink]="'changes/'+ item.Id"
+                                class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
+                                Historial Cambios Jefe
+                        </a>
+                        </td>
+                    </tr>
+                    }
+
+                </tbody>
+            </table>
+        </div>
+        }@else {
+
+        <div class="gap-2 grid xl:grid-cols-2 lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-1">
+
+            <div class="p-1">
+                <label for="first_name"
+                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nombre</label>
+                <input type="text" id="first_name" [(ngModel)]="modelEmployers.nombre" [disabled]="blockEdit"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    placeholder="John" required>
+            </div>
+
+            <div class="p-1">
+                <label for="first_name"
+                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Apellido</label>
+                <input type="text" id="first_name" [(ngModel)]="modelEmployers.apellido" [disabled]="blockEdit"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    placeholder="Does" required>
+            </div>
+
+            <div class="p-1">
+                <label for="first_name"
+                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Cedula</label>
+                <input type="text" id="first_name" [(ngModel)]="modelEmployers.cedula" [disabled]="blockEdit"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    placeholder="0121215516" required>
+            </div>
+
+            <div class="p-1">
+                <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                    Jefes
+                </label>
+                <select id="countries" [(ngModel)]="modelEmployers.jefe" [disabled]="changeBoos"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                   @for (item of arrayBoss; track $index) {
+                    <option [value]="item.Id">{{item.Nombre + " " + item.Apellido}}</option>   
+                   }                 
+                </select>
+            </div>
+
+        </div>
+
+        <button type="button" (click)="createEmployer()"
+        class="float-right mt-10  text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
+            Guardar
+        </button>
+
+        }
+
+
+    </div>
+
+
+</app-template>
